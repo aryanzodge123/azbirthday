@@ -1,68 +1,29 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import React, { Component } from 'react'
 
-export default class Clock extends Component {
-  constructor() {
-    super();
-    this.timer = 0;
-    this.startTimer = this.startTimer.bind(this);
-    this.birthday = moment().toString();
-    this.state = { timeRemaining: {} };
-  }
-
-  getTimeRemaining(birthday){
-    var epochTimeToBirthday = Date.parse(birthday) - Date.parse(new Date()); // number of milliseconds since January 1, 1970
-    var seconds = Math.floor( (epochTimeToBirthday/1000) % 60 );
-    var minutes = Math.floor( (epochTimeToBirthday/1000/60) % 60 );
-    var hours = Math.floor( (epochTimeToBirthday/(1000*60*60)) % 24 );
-    var days = Math.floor( epochTimeToBirthday/(1000*60*60*24) );
-
-    return {
-      'days': days,
-      'hours': hours,
-      'minutes': minutes,
-      'seconds': seconds
-    };
-  }
-
-  // Keep in and then remove when switch to form occurs
-  // https://reactjs.org/docs/react-component.html#componentdidmount
-  componentWillMount() {
-    const submittedDate = this.props.dateFormData.startDate.toString();
-    const timeLeft = this.getTimeRemaining(submittedDate);
-    this.setState({ timeRemaining: timeLeft });
-  }
-
-  componentDidUpdate() {
-    console.log(this.birthday);
-  }
-
-  startTimer() {
-    if (this.timer == 0) {
-      this.timer = setInterval(() => {
-        this.setState({ timeRemaining: this.getTimeRemaining(this.birthday) });
-      }, 1000);
+class Clock extends Component {
+    render() {
+        const time = this.props.timeRemaining;
+        return (
+            <div className="clock">
+                <div className="clock__days clock__box">
+                    <label className="clock__title">DAYS</label>
+                    <label className="clock__amount">{time.days}</label>
+                </div>
+                <div className="clock__hours clock__box">
+                    <label className="clock__title">HRS</label>
+                    <label className="clock__amount">{time.hours}</label>
+                </div>
+                <div className="clock__minutes clock__box">
+                    <label className="clock__title">MINS</label>
+                    <label className="clock__amount">{time.minutes}</label>
+                </div>
+                <div className="clock__seconds clock__box">
+                    <label className="clock__title">SECS</label>
+                    <label className="clock__amount">{time.seconds}</label>
+                </div>
+            </div>
+        )
     }
-  }
-
-  render() {
-    const dateFormData = this.props.dateFormData;
-    const data = this.state.timeRemaining;
-    this.birthday = dateFormData.startDate.toString();
-    this.startTimer();
-
-    return(
-      <div className={ dateFormData.completedForm ? 'showContent' : 'hideContent' } >
-
-        <p>Days: {data.days}</p>
-        <p>Hours: {data.hours}</p>
-        <p>Minutes: {data.minutes}</p>
-        <p>Seconds: {data.seconds}</p>
-
-        <h4>until</h4>
-
-        <h3>{dateFormData.startDate.toString()}</h3>
-      </div>
-    );
-  }
 }
+
+export default Clock;
