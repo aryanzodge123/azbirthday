@@ -1,0 +1,9 @@
+.showContent {
+  visibility: visible;
+}
+
+.hideContent {
+  visibility: hidden;
+  position: absolute;
+}
+

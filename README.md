@@ -1,2 +1,3 @@
-# azbirthday
-This is my birthday app made from react
+# React Birthday Countdown
+
+> Code implementation for a birthday countown app in React.
